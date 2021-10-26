@@ -1,8 +1,8 @@
-# zkNFT
+# 🎲 Zero-knowledge NFT
 
-Here I present zkNFT, a NFT powered by zero-knowledge proofs that flips the concept of an NFT upside down. Traditional NFTs contain metadata that are fully revealed. In essence, zkNFT allows users to create and prove ownership of NFTs and their characteristics without revealing the actual underlying metadata.
+Here I present zkNFT, a NFT powered by zkSNARKs that flips the concept of an NFT upside down. Traditionally NFTs contain metadata that are fully revealed. Here, zkNFT allows users to create and prove ownership of NFTs as well as their characteristics without revealing the actual underlying metadata.
 
-This would allow interesting universes to be built on top of the NFTs. For example, two pets, represented by NFTs and their hidden attributes, can engage in battle, but through ZK, can be orchestrated in a way such that the attributes are not fully revealed, but only the battle results are. In addition, zero knowledge creates unseen dynamics in trading described below.
+This would allow interesting universes to be built on top of the NFTs. For example, two pets, represented by NFTs and their hidden attributes, can engage in battle, but through ZK, can be orchestrated in a way such that the attributes are not fully revealed, but only the battle results are. In addition, this creates unseen dynamics in trading described below.
 
 ## How it works
 
