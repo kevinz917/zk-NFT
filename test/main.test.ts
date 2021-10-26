@@ -6,7 +6,7 @@ import { initMintProofsArgs, initMintWrongProofArgs, revealNftProofArgs, revertM
 describe("ZK-NFT", function () {
   let nftContract: Ethers.Contract;
   let owner: any;
-  let addr1;
+  let addr1: any;
   let addr2;
 
   before(async () => {
@@ -40,5 +40,12 @@ describe("ZK-NFT", function () {
     await expect(nftContract.partialReveal1(...partialRevealNFTArgs, 0))
       .to.emit(nftContract, "PartialReveal")
       .withArgs(0, 1);
+  });
+
+  it("Create bid", async () => {
+    expect(nftContract.createBid(0, { value: 1 })).to.be.revertedWith(revertMessages.SAME_OWNER);
+
+    await nftContract.connect(addr1).createBid(0, { value: 1 });
+    expect(await nftContract.bids(0, addr1.address)).to.be.equal(1);
   });
 });

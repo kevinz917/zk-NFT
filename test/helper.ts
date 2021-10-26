@@ -1,6 +1,7 @@
 export enum revertMessages {
   INVALID_PROOF = "Proof is not valid",
   INVALID_HASH = "Invalid hash",
+  SAME_OWNER = "Same owner",
 }
 
 // mint NFT
