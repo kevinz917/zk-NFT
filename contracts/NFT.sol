@@ -22,8 +22,8 @@ contract ZKNFT is ERC721Enumerable, Ownable {
 
   mapping(uint256 => character) public characters;
   mapping(uint256 => mapping(address => uint256)) public bids; // tokenId -> user -> amount
-  mapping(address => uint256) balances;
-  mapping(uint256 => address) ogOwners; // owner => tokenId
+  mapping(address => uint256) public balances;
+  mapping(uint256 => address) public ogOwners; // owner => tokenId
   uint256 public tokenId = 0;
 
   event PartialReveal(uint256 _tokenId, uint256 _partialProofId);
@@ -111,7 +111,7 @@ contract ZKNFT is ERC721Enumerable, Ownable {
     emit AcceptBid(_tokenId, msg.sender, _buyer, bids[_tokenId][_buyer]);
   }
 
-  // Withdraw balance from accounts
+  // Withdraw all balance from contract
   function withdraw() public {
     uint256 amount = balances[msg.sender];
     require(amount != 0, "Balance is empty");

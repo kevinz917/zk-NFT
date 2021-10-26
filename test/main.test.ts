@@ -1,39 +1,38 @@
 import { expect } from "chai";
 import { ethers as Ethers } from "ethers";
 import { ethers } from "hardhat";
-import { initMintProofsArgs, initMintWrongProofArgs, revealNftProofArgs, revertMessages, partialRevealNFTArgs } from "./helper";
+import { initMintProofsArgs, initMintWrongProofArgs, revertMessages, partialRevealNFTArgs, fullyRevealNFTArgs } from "./helper";
 
-describe("ZK-NFT", function () {
+describe("ZK-NFT", () => {
   let nftContract: Ethers.Contract;
-  let owner: any;
   let addr1: any;
-  let addr2;
+  let addr2: any;
+  let addr3: any;
 
   before(async () => {
-    const _ZKNFT = await ethers.getContractFactory("ZKNFT");
-    nftContract = await _ZKNFT.deploy();
-    [owner, addr1, addr2] = await ethers.getSigners();
+    nftContract = await (await ethers.getContractFactory("ZKNFT")).deploy();
+    [addr1, addr2, addr3] = await ethers.getSigners();
   });
 
   it("Mint ", async () => {
     await nftContract.mint(...initMintProofsArgs);
     expect(nftContract.mint(...initMintWrongProofArgs)).to.be.revertedWith(revertMessages.INVALID_PROOF);
 
-    expect(await nftContract.balanceOf(owner.address)).to.be.equal(1); // mint NFT
+    expect(await nftContract.balanceOf(addr1.address)).to.be.equal(1); // mint NFT
 
     const character = await nftContract.characters(0);
     expect(character.cHash).equal(initMintProofsArgs[3][0]);
     expect(character.isRevealed).equal(false);
   });
 
-  it("Reveal", async () => {
-    await nftContract.reveal(...revealNftProofArgs, 0);
+  it("Full reveal", async () => {
+    await nftContract.reveal(...fullyRevealNFTArgs, 0);
 
     const character = await nftContract.characters(0); // verify character attribute reveal
     expect(character.isRevealed).equal(true);
-    expect(character.attribute1).equal(revealNftProofArgs[3][1]);
-    expect(character.attribute2).equal(revealNftProofArgs[3][2]);
-    expect(character.attribute3).equal(revealNftProofArgs[3][3]);
+    expect(character.attribute1).equal(fullyRevealNFTArgs[3][1]);
+    expect(character.attribute2).equal(fullyRevealNFTArgs[3][2]);
+    expect(character.attribute3).equal(fullyRevealNFTArgs[3][3]);
   });
 
   it("Partial reveal", async () => {
@@ -43,13 +42,19 @@ describe("ZK-NFT", function () {
   });
 
   it("Create bid", async () => {
-    expect(nftContract.createBid(0, { value: 1 })).to.be.revertedWith(revertMessages.SAME_OWNER);
+    expect(nftContract.createBid(0, { value: 1 })).to.be.revertedWith(revertMessages.SAME_OWNER); // addr1 cannot bid on it
 
-    await nftContract.connect(addr1).createBid(0, { value: 1 });
-    expect(await nftContract.bids(0, addr1.address)).to.be.equal(1);
+    await nftContract.connect(addr2).createBid(0, { value: 10 }); // addr2 creates a bid
+    expect(await nftContract.bids(0, addr2.address)).to.be.equal(10);
   });
 
-  // it("Accept bid", async () => {
-  //   await nftContract
-  // })
+  it("Accept bid", async () => {
+    await nftContract.acceptBid(...fullyRevealNFTArgs, 0, addr2.address);
+    expect(await nftContract.balances(addr1.address)).to.be.equal(10);
+  });
+
+  it("Withdraw funds", async () => {
+    await nftContract.withdraw();
+    expect(await nftContract.balances(addr1.address)).to.be.equal(0); // TODO: Add test balance
+  });
 });
