@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers as Ethers } from "ethers";
 import { ethers } from "hardhat";
-import { initMintProofsArgs, initMintWrongProofArgs, revealNftProofArgs, revertMessages } from "./helper";
+import { initMintProofsArgs, initMintWrongProofArgs, revealNftProofArgs, revertMessages, partialRevealNFTArgs } from "./helper";
 
 describe("ZK-NFT", function () {
   let nftContract: Ethers.Contract;
@@ -34,5 +34,11 @@ describe("ZK-NFT", function () {
     expect(character.attribute1).equal(revealNftProofArgs[3][1]);
     expect(character.attribute2).equal(revealNftProofArgs[3][2]);
     expect(character.attribute3).equal(revealNftProofArgs[3][3]);
+  });
+
+  it("Partial reveal", async () => {
+    await expect(nftContract.partialReveal1(...partialRevealNFTArgs, 0))
+      .to.emit(nftContract, "PartialReveal")
+      .withArgs(0, 1);
   });
 });

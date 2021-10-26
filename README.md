@@ -7,11 +7,10 @@ This would allow interesting universes to be built on top of the NFTs. For examp
 ## How it works
 
 1. Minting
-   User first select attributes for their NFT. In this prototype it means selecting three values such as speed, strength, and health. These attributes are then stored off-chain in a browser cache. To mint the NFT, a hash of the attributes is submitted along with a zero-knowledge proof to verify that the three attributes are within bounds specified by the protocol. For instance, the sum of the three abilities must be less than a max value.
+   User first select attributes for their NFT in private with some constrait. In this prototype, it means selecting three attributes for your character, and the sum of the attributes has to be less than a max value. These attributes are then stored off-chain in a browser cache. To mint the NFT, the proof for minting is submitted which contains hidden values of attributes.
 
 2. Revealing and Trading
-   Trading is an integral part of any NFT ecosystem, but how would people trade if the information is hidden? Here, we use a partial reveal schema that allows users to reveal a portion of their NFT's metadata without revealing the entire NFT, proven by zkSNARKs again. For example, seller A wants to prove to buyer B that seller A's NFT has an attribute of speed greater than 5, but not specifying what that value is. This partial reveal schema provides the necessary speculation to engage buyers and sellers in a fog-of-war type interaction we haven't seen anywhere else in the NFT world.
+   Trading is an integral part of any NFT ecosystem, but how would people trade if the information is hidden? Here, we use a partial reveal schema that allows users to first reveal a portion of their NFT's metadata without revealing the entire scheme, proven by zkSNARKs. For example, seller A wants to prove to buyer B that his NFT has an attribute of "speed" greater than 5 to encourage a purchase, but not specifying what that value is to retain leverage. This partial reveal schema provides the necessary speculation to engage buyers and sellers in a fog-of-war type interaction we haven't seen anywhere else in the NFT world.
 
 3. Revealing the entire NFT
-   Users can fully reveal the characteristics of their NFTs and broadcast it on chain, potentially making their asset more desirable
-# zk-NFT
+   When trading the NFT, the seller must reveal the full characteristics of their NFT, effectively broadcasting it on-chain.
