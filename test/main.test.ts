@@ -48,4 +48,8 @@ describe("ZK-NFT", function () {
     await nftContract.connect(addr1).createBid(0, { value: 1 });
     expect(await nftContract.bids(0, addr1.address)).to.be.equal(1);
   });
+
+  // it("Accept bid", async () => {
+  //   await nftContract
+  // })
 });
