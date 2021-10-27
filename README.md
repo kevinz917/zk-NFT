@@ -22,7 +22,7 @@ Alice, seeing that Bob's bid is fair, accepts the bid and sells her character. W
 
 ## The Breakdown
 
-1. **Minting**. User first select attributes for their NFT in private with some constrait. In this prototype, it means selecting three attributes for your character, and the sum of the attributes has to be less than a max value. These attributes are then stored off-chain in a browser cache. To mint the NFT, the proof for minting is submitted which contains hidden values of attributes.
+1. **Minting**. User first select attributes for their NFT in private with some constraint. In this prototype, it means selecting three attributes for your character, and the sum of the attributes has to be less than a max value. These attributes are then stored off-chain in a browser cache. To mint the NFT, the proof for minting is submitted which contains hidden values of attributes.
 
 2. **Revealing and Speculating** Trading is an integral part of any NFT ecosystem, but how would people trade if the information is hidden? Here, we use a partial reveal schema that allows users to first reveal a portion of their NFT's metadata without revealing the entire scheme, proven by zkSNARKs. For example, seller A wants to prove to buyer B that his NFT has an attribute of "speed" greater than 5 to encourage a purchase, but not specifying what that value is to retain leverage. This partial reveal schema provides the necessary speculation to engage buyers and sellers in a fog-of-war type interaction we haven't seen anywhere else in the NFT world.
 
