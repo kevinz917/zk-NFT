@@ -8,15 +8,17 @@ zkSNARKs written in [Circom](https://github.com/iden3/circom) and [Solidity](htt
 
 ## How it works
 
+Here I propose a hypothetical game play involving fog-of-war type bids.
+
 Suppose Alice plays a video game (powered by zk-NFT). First, the game asks Alice to create her character (mint the NFT). The character has three attributes: speed, agility, and endurance, and the total of these attributes cannot exceed 10.
 
 Alice then creates her character and keeps these attributes private (off-chain) to herself and submits a hash of it onchain (committing the zk proof). After a few hours, many other players such as Bob also create their own unique characters.
 
-As the game progressed, many have realize that characters with high speed values are currently useful, and Alice happens to have a character like that. However, because the information is hidden, others don't know. Seeing that her character is desirable, Alice decides to sell it.
+As the game progressed, many have realize that characters with high speed and endurance values are currently useful, and Alice happens to have a character like that. However, because the information is hidden, others don't know. Seeing that her character is desirable, Alice decides to sell it.
 
-In order to create speculation and movement in the market, Alice partially reveals (using SNARKs) that her character indeed has a speed attribute above 7 (or any arbitrary value), but doesn't reveal exactly the number. This garners interest from buyers, and Bob decides to place a bid of 1 ETH. At the same time, Alice, without revealing the entire NFT, retains some leverage and information asymmetry.
+In order to create speculation and movement in the market, Alice partially reveals (using SNARKs) that her character indeed has a speed attribute above 7, but doesn't reveal exactly the stat (realistically she should be able to reveal a combination of any proofs). This garners interest from buyers, and Bob decides to place a bid of 1 ETH. At the same time, Alice, without revealing the entire NFT, retains some leverage and information asymmetry.
 
-Alice, seeing that Bob's bid is fair, accepts the bid and sells her character. When she accepts the bid, she hands over the right of the character, and is also bounded to simultaneously reveals all three attributes of her character. Bob is very happy - he knew that the speed attribute is higher than 7, and is pleased to find out that it's actually a 9, thinking he got a good deal. Alice, also thinks she got a decent deal, since the other attributes of her character, agility and endurance are very low (but she didn't have to reveal them to Bob), and she suspects that in the future, the game will value characters with high agility stats. She continues the cycle by trying to buy other unrevealed characters ...
+Alice, seeing that Bob's bid is fair, accepts the bid and sells her character. When she accepts the bid, she hands over the right of the character, and is also bounded to simultaneously reveals all three attributes of her character. Bob is very happy - he knew that the speed attribute is higher than 7, and is pleased to find out that it's actually a 9, thinking he got a good deal. Alice, also thinks she got a decent deal, since the other attributes of her character, agility and endurance are low (but she didn't have to reveal them to Bob), and she suspects that in the future, the game will value characters with high agility stats, so she was happy to sell it off. She continues the buy cycle by trying to buy other unrevealed characters ...
 
 ## The Breakdown
 
