@@ -61,7 +61,7 @@ contract ZKNFT is ERC721Enumerable, Ownable {
     uint256[4] memory _publicInputs,
     uint8 _tokenId
   ) public {
-    require(revealVerifier.verifyRevealProof(_a, _b, _c, _publicInputs));
+    require(revealVerifier.verifyProof(_a, _b, _c, _publicInputs));
     require(characters[_tokenId].cHash == _publicInputs[0], "Invalid hash");
     characters[_tokenId].attribute1 = _publicInputs[1];
     characters[_tokenId].attribute2 = _publicInputs[2];
@@ -103,7 +103,7 @@ contract ZKNFT is ERC721Enumerable, Ownable {
     address _buyer
   ) public {
     if (ogOwners[_tokenId] == msg.sender) {
-      require(revealVerifier.verifyRevealProof(_a, _b, _c, _input), "Invalid proof"); // only og owners require proof
+      require(revealVerifier.verifyProof(_a, _b, _c, _input), "Invalid proof"); // only og owners require proof
     }
     require(ownerOf(_tokenId) == msg.sender, "Not owner");
     balances[msg.sender] += bids[_tokenId][_buyer];

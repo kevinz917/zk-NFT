@@ -10,25 +10,29 @@ include "../node_modules/circomlib/circuits/mimcsponge.circom"
 // apply MiMC hash to attributes of the character
 template hashCharacter() {
     signal private input attribute[3];
+    signal private input hashKey;
     signal output out;
 
-    component mimc = MiMCSponge(3, 220, 1);
+    component mimc = MiMCSponge(4, 220, 1);
     mimc.ins[0] <== attribute[0];
     mimc.ins[1] <== attribute[1];
     mimc.ins[2] <== attribute[2];
+    mimc.ins[3] <== hashKey;
 
     mimc.k <== 0;
 
     out <== mimc.outs[0];
 }
 
-// mint NFT. Users enter three attributes (private), which are stored locally in the browser. 
+// mint NFT. Users enter three attributes (private) along with a randomly generated private key
+// to prevent spam attacks, which are stored locally in the browser. 
 // A hash of the NFT is created along with a ZK proof to show that the three attributes satisfy
 // a certain criteria.
 template mint(MAX_VAL) {
     signal private input attribute1;
     signal private input attribute2;
     signal private input attribute3;
+    signal private input hashKey;
 
     signal output out; // hashed value of attributes
 
@@ -44,6 +48,7 @@ template mint(MAX_VAL) {
     cHash.attribute[0] <== attribute1;
     cHash.attribute[1] <== attribute2;
     cHash.attribute[2] <== attribute3;
+    cHash.hashKey <== hashKey;
 
     out <== cHash.out;
 }
@@ -57,6 +62,7 @@ template revealAttribute(MIN_VAL) {
     signal private input attribute1;
     signal private input attribute2;
     signal private input attribute3;
+    signal private input hashKey;
 
     signal output out;
 
@@ -72,6 +78,7 @@ template revealAttribute(MIN_VAL) {
     cHash.attribute[0] <== attribute1;
     cHash.attribute[1] <== attribute2;
     cHash.attribute[2] <== attribute3;
+    cHash.hashKey <== hashKey;
 
     out <== cHash.out;
 }
@@ -81,6 +88,7 @@ template revealNFT() {
     signal input attribute1;
     signal input attribute2;
     signal input attribute3;
+    signal private input hashKey;
 
     signal output out;
 
@@ -89,6 +97,7 @@ template revealNFT() {
     cHash.attribute[0] <== attribute1;
     cHash.attribute[1] <== attribute2;
     cHash.attribute[2] <== attribute3;
+    cHash.hashKey <== hashKey;
 
     out <== cHash.out;
 }
